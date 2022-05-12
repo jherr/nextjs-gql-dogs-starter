@@ -1,15 +1,7 @@
 import React, { useState, useMemo } from "react";
 import Link from "next/link";
 import { dehydrate, useQuery } from "react-query";
-import {
-  Grid,
-  Card,
-  Image,
-  Text,
-  Select,
-  Title,
-  TextInput,
-} from "@mantine/core";
+import { Grid, Card, Image, Text, Select, Title } from "@mantine/core";
 
 import { queryClient, getDogs } from "../src/api";
 import { weeksToString } from "../src/utilities";
@@ -63,32 +55,24 @@ const Home: React.FunctionComponent = () => {
     }
   );
 
-  const [textFilter, setTextFilter] = useState("");
-  const dogs = useMemo(
-    () => data?.dogs.filter(({ name }) => name.includes(textFilter)) ?? [],
-    [data, textFilter]
-  );
-
   return (
     <div>
       <Grid>
         <Grid.Col xs={12} md={3}>
           <Select
-            id="sexSelect"
             value={sex}
             label="Sex"
             onChange={setSex}
             data={[
-              { value: "", label: "Any", id: "sexAny" },
-              { value: "Male", label: "Male", id: "sexMale" },
-              { value: "Female", label: "Female", id: "sexFemale" },
+              { value: "", label: "Any" },
+              { value: "Male", label: "Male" },
+              { value: "Female", label: "Female" },
             ]}
           />
         </Grid.Col>
 
         <Grid.Col xs={12} md={3}>
           <Select
-            id="age-select"
             value={ageFilter}
             label="Age"
             onChange={setAgeFilter}
@@ -110,20 +94,10 @@ const Home: React.FunctionComponent = () => {
             ]}
           />
         </Grid.Col>
-
-        <Grid.Col xs={12} md={3}>
-          <TextInput
-            id="textFilter"
-            placeholder="Name"
-            label="Name"
-            value={textFilter}
-            onChange={(evt) => setTextFilter(evt.target.value)}
-          />
-        </Grid.Col>
       </Grid>
 
       <Grid mt={10}>
-        {dogs.map((f, i) => (
+        {data?.dogs?.map((f, i) => (
           <Grid.Col
             className="dog"
             xs={12}
